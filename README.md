@@ -1,37 +1,5 @@
 # PassKeeper - Password Manager
-
-<div style="display: flex; align-items: center;">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="64"
-      height="64"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="url(#gradient)"  <!-- Change stroke to gradient -->
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-        <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#8D17C8; stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#EE0073; stop-opacity:1" />
-            </linearGradient>
-        </defs>
-        <rect x="5" y="11" width="14" height="10" rx="2" ry="2" />
-        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-        <line x1="12" y1="16" x2="12" y2="16" />
-    </svg>
-    <span style="
-        font-size: 24px;
-        font-weight: bold;
-        margin-left: 10px;
-        background: linear-gradient(to right, #8D17C8, #EE0073);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;">
-        PassKeeper
-    </span>
-</div>
+<img src="./public/1.PNG" alt="Description of Image" width="200">
 
 
 
