@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import PasswordList from './PasswordList';
 import PasswordDetail from './PasswordDetail';
 import Navbar from './Navbar';
+import Sidebar from './Sidebar';
 
 const PasswordManager = () => {
   const [passwords] = useState([
@@ -11,7 +12,7 @@ const PasswordManager = () => {
     { site: 'heroku.com', username: 'heroku_user', password: 'Heroku123@', accounts: 2 },
     // Add more sites as needed
   ]);
-  
+
   const [selectedPassword, setSelectedPassword] = useState(null);
 
   const handleView = (password) => {
@@ -19,15 +20,24 @@ const PasswordManager = () => {
   };
 
   return (
-    <div>
-      <Navbar />
-      <div className="min-h-screen bg-gray-100 p-6">
-        <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-          {!selectedPassword ? (
-            <PasswordList passwords={passwords} onView={handleView} />
-          ) : (
-            <PasswordDetail password={selectedPassword} goBack={() => setSelectedPassword(null)} />
-          )}
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Main Content */}
+      <div className="flex-grow lg:ml-64 bg-gray-100">
+        {/* Navbar */}
+        <Navbar />
+
+        {/* Password Manager Content */}
+        <div className="p-6">
+          <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+            {!selectedPassword ? (
+              <PasswordList passwords={passwords} onView={handleView} />
+            ) : (
+              <PasswordDetail password={selectedPassword} goBack={() => setSelectedPassword(null)} />
+            )}
+          </div>
         </div>
       </div>
     </div>

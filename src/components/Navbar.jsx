@@ -21,21 +21,6 @@ const Navbar = () => {
 
       {/* Nav Items */}
       <div className="flex items-center space-x-4">
-        <Link to="/" className="hover:text-gray-300">
-          Home
-        </Link>
-
-        {/* Category Dropdown */}
-        <div className="relative">
-          <button className="hover:text-gray-300 flex items-center">
-            Category 
-          </button>
-          <div className="absolute mt-2 hidden group-hover:block w-48 bg-white text-gray-700 rounded-lg shadow-lg">
-            <Link to="/category1" className="block px-4 py-2 hover:bg-gray-200">Category 1</Link>
-            <Link to="/category2" className="block px-4 py-2 hover:bg-gray-200">Category 2</Link>
-            <Link to="/category3" className="block px-4 py-2 hover:bg-gray-200">Category 3</Link>
-          </div>
-        </div>
 
         {/* Profile Section */}
         <div className="relative">

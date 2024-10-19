@@ -5,7 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backdropBlur: {
+        DEFAULT: '20px', // Adjust the default blur value if needed
+      },
+    },
   },
-  plugins: [],
+  variants: {
+    backdropBlur: ['responsive', 'hover', 'focus'],
+  },
+  plugins: [
+  ],
 }

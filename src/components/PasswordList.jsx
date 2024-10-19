@@ -1,23 +1,28 @@
-// src/components/PasswordList.jsx
 import React, { useState } from "react";
 import { MdOutlineViewList } from "react-icons/md"; // Keep the existing icon
 import { IoEarth } from "react-icons/io5"; // Import the IoEarth icon
 import { CiSearch } from "react-icons/ci"; // Import the CiSearch icon
+import AddPasswordModal from "./AddPasswordModal"; // Import the modal component
 
 const PasswordList = ({ passwords, onView, onAdd }) => {
   const [searchQuery, setSearchQuery] = useState(""); // State for the search query
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
   // Filter passwords based on the search query
   const filteredPasswords = passwords.filter((password) =>
     password.site.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleSave = (newPassword) => {
+    onAdd(newPassword); // Pass the new password to the parent component
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-700 to-pink-600 bg-clip-text text-transparent">PASSWORD</h2>
         <button 
-          onClick={onAdd} 
+          onClick={() => setIsModalOpen(true)} // Open modal on button click
           className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800"
         >
           <span className="relative flex items-center px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
@@ -65,11 +70,18 @@ const PasswordList = ({ passwords, onView, onAdd }) => {
               onClick={() => onView(password)} // Icon click still triggers view action
               className="flex items-center justify-center p-1 text-indigo-500 hover:text-indigo-600 transition duration-200"
             >
-              <MdOutlineViewList size={24} /> {/* Displaying the view icon */}
+              <MdOutlineViewList className="text-purple-600" size={24} /> {/* Displaying the view icon */}
             </button>
           </div>
         ))}
       </div>
+
+      {/* Modal for adding password */}
+      <AddPasswordModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onSave={handleSave} 
+      />
     </div>
   );
 };

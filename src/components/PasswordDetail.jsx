@@ -1,4 +1,3 @@
-// src/components/PasswordDetail.jsx
 import React, { useState } from 'react';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 import { MdContentCopy } from 'react-icons/md';
@@ -7,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const PasswordDetail = ({ password, goBack }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isEditable, setIsEditable] = useState(false); // State for editable mode
+  const [editedPassword, setEditedPassword] = useState(password); // State to hold edited password details
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
@@ -15,6 +16,16 @@ const PasswordDetail = ({ password, goBack }) => {
   const copyToClipboard = (text, label) => {
     navigator.clipboard.writeText(text);
     toast.success(`${label} copied to clipboard!`);
+  };
+
+  const handleEdit = () => {
+    setIsEditable(true); // Enable editing mode
+    toast.info('You can now edit the password details!'); // Show toast notification
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedPassword((prev) => ({ ...prev, [name]: value })); // Update edited password details
   };
 
   return (
@@ -26,19 +37,21 @@ const PasswordDetail = ({ password, goBack }) => {
       >
         Back
       </button>
-      <h3 className="text-2xl font-bold mb-4">{password.site}</h3>
+      <h3 className="text-2xl font-bold mb-4">{editedPassword.site}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">Username</label>
           <div className="mt-1 relative">
             <input
               type="text"
-              readOnly
-              value={password.username}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md pr-10"
+              name="username"
+              readOnly={!isEditable}
+              value={editedPassword.username}
+              onChange={handleChange} // Handle change for username
+              className={`w-full px-3 py-2 border rounded-md pr-10 ${!isEditable ? 'border-gray-300' : 'border-blue-500'}`}
             />
             <button
-              onClick={() => copyToClipboard(password.username, 'Username')}
+              onClick={() => copyToClipboard(editedPassword.username, 'Username')}
               className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600"
             >
               <MdContentCopy />
@@ -51,9 +64,11 @@ const PasswordDetail = ({ password, goBack }) => {
           <div className="mt-1 relative">
             <input
               type={isPasswordVisible ? "text" : "password"}
-              readOnly
-              value={password.password}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md pr-10"
+              name="password"
+              readOnly={!isEditable}
+              value={editedPassword.password}
+              onChange={handleChange} // Handle change for password
+              className={`w-full px-3 py-2 border rounded-md pr-10 ${!isEditable ? 'border-gray-300' : 'border-blue-500'}`}
             />
             <button
               type="button"
@@ -63,7 +78,7 @@ const PasswordDetail = ({ password, goBack }) => {
               {isPasswordVisible ? <HiEyeOff /> : <HiEye />}
             </button>
             <button
-              onClick={() => copyToClipboard(password.password, 'Password')}
+              onClick={() => copyToClipboard(editedPassword.password, 'Password')}
               className="absolute inset-y-0 right-10 flex items-center pr-3 text-gray-600"
             >
               <MdContentCopy />
@@ -76,12 +91,14 @@ const PasswordDetail = ({ password, goBack }) => {
           <div className="mt-1 relative">
             <input
               type="text"
-              readOnly
-              value={password.site}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md pr-10"
+              name="site"
+              readOnly={!isEditable}
+              value={editedPassword.site}
+              onChange={handleChange} // Handle change for site
+              className={`w-full px-3 py-2 border rounded-md pr-10 ${!isEditable ? 'border-gray-300' : 'border-blue-500'}`}
             />
             <button
-              onClick={() => copyToClipboard(password.site, 'Site')}
+              onClick={() => copyToClipboard(editedPassword.site, 'Site')}
               className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600"
             >
               <MdContentCopy />
@@ -94,12 +111,14 @@ const PasswordDetail = ({ password, goBack }) => {
           <div className="mt-1 relative">
             <input
               type="text"
-              readOnly
-              value={password.notes || ''} // Assuming notes can be empty
-              className="w-full px-3 py-2 border border-gray-300 rounded-md pr-10"
+              name="notes"
+              readOnly={!isEditable}
+              value={editedPassword.notes || ''} // Assuming notes can be empty
+              onChange={handleChange} // Handle change for notes
+              className={`w-full px-3 py-2 border rounded-md pr-10 ${!isEditable ? 'border-gray-300' : 'border-blue-500'}`}
             />
             <button
-              onClick={() => copyToClipboard(password.notes || '', 'Notes')}
+              onClick={() => copyToClipboard(editedPassword.notes || '', 'Notes')}
               className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600"
             >
               <MdContentCopy />
@@ -109,7 +128,12 @@ const PasswordDetail = ({ password, goBack }) => {
       </div>
 
       <div className="mt-6 space-x-4">
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">Edit</button>
+        <button 
+          onClick={handleEdit} 
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+        >
+          Edit
+        </button>
         <button className="px-4 py-2 bg-red-500 text-white rounded-lg">Delete</button>
       </div>
     </div>
